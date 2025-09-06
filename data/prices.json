@@ -1,7 +1,35 @@
 {
-  "arabica": null,
-  "robusta": null,
-  "last_update": null,
-  "date": null,
-  "market_open": false
+  "ultima_atualizacao": "2025-09-06T16:31:38.780360",
+  "data_formatada": "06/09/2025",
+  "hora_formatada": "16:31:38",
+  "pregao_aberto": false,
+  "fonte": "noticiasagricolas",
+  "cafe": {
+    "arabica": {
+      "preco": 2277.03,
+      "unidade": "saca",
+      "peso_kg": 60,
+      "moeda": "BRL"
+    },
+    "robusta": {
+      "preco": 1358.45,
+      "unidade": "saca",
+      "peso_kg": 60,
+      "moeda": "BRL"
+    }
+  },
+  "cacau": {
+    "bahia": {
+      "preco": null,
+      "unidade": "arroba",
+      "peso_kg": 15,
+      "moeda": "BRL"
+    },
+    "para": {
+      "preco": null,
+      "unidade": "arroba",
+      "peso_kg": 15,
+      "moeda": "BRL"
+    }
+  }
 }
