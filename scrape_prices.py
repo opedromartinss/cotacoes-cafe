@@ -115,6 +115,11 @@ def update_prices(prices_path: Path, arabica_price: float, conilon_price: float)
     now = datetime.now()
     data_formatada = now.strftime("%d/%m/%Y")
     hora_formatada = now.strftime("%H:%M:%S")
+    # Construir JSON apenas com dados de café.  O portal focado em café não
+    # precisa carregar estruturas de cacau, portanto omitimos essa chave
+    # completamente para reduzir o tamanho do arquivo.  Se no futuro for
+    # necessário adicionar outros produtos, eles poderão ser acrescentados
+    # aqui sem quebrar o formato atual.
     data = {
         "ultima_atualizacao": now.isoformat(),
         "data_formatada": data_formatada,
@@ -132,23 +137,6 @@ def update_prices(prices_path: Path, arabica_price: float, conilon_price: float)
                 "preco": conilon_price,
                 "unidade": "saca",
                 "peso_kg": 60,
-                "moeda": "BRL",
-            },
-        },
-        # Retain existing keys for cacau if they exist; if not, provide
-        # sensible placeholders.  Consumers of this file should ignore
-        # cacau entries if they are not updated here.
-        "cacau": {
-            "bahia": {
-                "preco": None,
-                "unidade": "arroba",
-                "peso_kg": 15,
-                "moeda": "BRL",
-            },
-            "para": {
-                "preco": None,
-                "unidade": "arroba",
-                "peso_kg": 15,
                 "moeda": "BRL",
             },
         },
