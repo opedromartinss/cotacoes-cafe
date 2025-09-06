@@ -288,9 +288,11 @@ def main() -> None:
     # Fetch prices
     date_arabica, price_arabica = parse_price(arabica_url)
     date_conilon, price_conilon = parse_price(conilon_url)
-    # If dates differ, choose the most recent one for history
-    trade_date = date_arabica if date_arabica >= date_conilon else date_conilon
+    # Usamos sempre a data atual (data em que o script é executado) para o histórico,
+    # independentemente da data reportada no widget. Isso garante que o histórico
+    # reflita o dia da consulta, mesmo que a fonte exiba a data do pregão anterior.
     now = datetime.now()
+    trade_date = now.strftime("%d/%m/%Y")
     # Update files
     update_prices(prices_path, price_arabica, price_conilon)
     update_history(history_path, price_arabica, price_conilon, trade_date, now)
