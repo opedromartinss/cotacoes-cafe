@@ -1,7 +1,7 @@
 [
   {
     "referente_a": "2025-09-11",
-    "coletado_em": "2025-09-11T06:24:40.184547",
+    "coletado_em": "2025-09-11T10:27:46.368112",
     "produto": "cafe",
     "tipo": "arabica",
     "valor": 2333.43,
@@ -10,7 +10,7 @@
   },
   {
     "referente_a": "2025-09-11",
-    "coletado_em": "2025-09-11T06:24:40.184547",
+    "coletado_em": "2025-09-11T10:27:46.368112",
     "produto": "cafe",
     "tipo": "conillon",
     "valor": 1385.55,
