@@ -53,20 +53,27 @@ def update_prices(prices_path: Path, price_arabica: float, price_conilon: float,
     prices_path.write_text(json.dumps(data, ensure_ascii=False, indent=2))
 
 
-def update_history(history_path: Path,
-                   price_arabica: float,
-                   price_conilon: float,
-                   trade_date: str,
-                   now: datetime) -> None:
+def update_history(
+    history_path: Path,
+    price_arabica: float,
+    price_conilon: float,
+    trade_date: str,
+    now: datetime,
+) -> None:
     """
     Append the latest coffee prices to the historical JSON file.
 
-    Each update creates two records—one for Arábica and one for Conilon—to match
-    the original data structure used by the site.  Each record includes the date
-    the price refers to (``referente_a``), the exact timestamp when the data was
-    collected (``coletado_em``), the product, the type, the price value, the
-    measurement unit and the currency.  The history retains only the most
-    recent 20 entries (10 updates × 2 types) to prevent unbounded growth.
+    The history file records one entry per update containing both Arabica and
+    Conilon prices.  Each record stores:
+
+    * ``data``: the date the prices refer to (``trade_date``), formatted as
+      ``DD/MM/YYYY``.
+    * ``data_consulta``: the exact timestamp when the data was collected,
+      using ISO 8601 format.
+    * ``arabica``: the price of Arábica coffee on that date.
+    * ``conilon``: the price of Conilon (Robusta) coffee on that date.
+
+    Only the most recent 10 entries are kept to prevent unbounded growth.
     """
     # Load existing history if present
     history: List[dict] = []
@@ -77,33 +84,17 @@ def update_history(history_path: Path,
             # If the file is malformed, start with an empty list
             history = []
 
-    # Prepare two entries: one for Arabica and another for Conilon
-    base_timestamp = now.isoformat()
-    arabica_entry = {
-        "referente_a": trade_date,
-        "coletado_em": base_timestamp,
-        "produto": "cafe",
-        "tipo": "arabica",
-        "valor": price_arabica,
-        "unidade": "saca",
-        "moeda": "BRL",
-    }
-    conilon_entry = {
-        "referente_a": trade_date,
-        "coletado_em": base_timestamp,
-        "produto": "cafe",
-        "tipo": "conilon",
-        "valor": price_conilon,
-        "unidade": "saca",
-        "moeda": "BRL",
+    # Create a single entry for this update
+    entry = {
+        "data": trade_date,
+        "data_consulta": now.isoformat(),
+        "arabica": price_arabica,
+        "conilon": price_conilon,
     }
 
-    # Append the new entries to history
-    history.append(arabica_entry)
-    history.append(conilon_entry)
-
-    # Keep only the last 20 records (10 most recent updates)
-    history = history[-20:]
+    # Append the new entry and trim to the last 10 records
+    history.append(entry)
+    history = history[-10:]
 
     # Write back to file
     history_path.write_text(json.dumps(history, ensure_ascii=False, indent=2))
