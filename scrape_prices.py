@@ -36,7 +36,12 @@ Environment:
 """
 
 import json
-import os
+i
+# Define custom headers to mimic a real browser
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117 Safari/537.36"
+}
+mport os
 from datetime import datetime
 from pathlib import Path
 from typing import Tuple, List
@@ -65,7 +70,9 @@ def parse_price(url: str) -> Tuple[str, float]:
         Exception: If the request fails or the expected table structure
         cannot be found.
     """
-    resp = requests.get(url, timeout=30)
+      resp = requests.get(url, headers=HEADERS, timeout=30)
+  
+      # # rresp = requests.get(url, headers=HEADERS, timeout=30)
     resp.raise_for_status()
     html = resp.text
     soup = bs4.BeautifulSoup(html, "html.parser")
