@@ -43,12 +43,62 @@ def is_market_open() -> bool:
 
 def update_prices(prices_path: Path, price_arabica: float, price_conilon: float,
                   trade_date: str, now: datetime) -> None:
+    """
+    Write the latest coffee prices into ``prices.json`` in a structure
+    compatible with the front‑end data loader.
+
+    The output JSON contains meta‑information about the update time
+    (``ultima_atualizacao``), a human‑readable date and time, and a
+    nested ``cafe`` object with pricing details for each type.  The
+    structure mirrors the fallback data used by ``data-loader.js`` on
+    cotacaodocafe.com so that the site can parse the values directly
+    from this file.
+
+    Example output::
+
+        {
+            "ultima_atualizacao": "2025-09-19T18:20:18.890339",
+            "data_formatada": "19/09/2025",
+            "hora_formatada": "18:20:18",
+            "pregao_aberto": true,
+            "fonte": "Notícias Agrícolas",
+            "cafe": {
+                "arabica": { "preco": 2292.66, "unidade": "saca", "peso_kg": 60, "moeda": "BRL" },
+                "robusta": { "preco": 1402.21, "unidade": "saca", "peso_kg": 60, "moeda": "BRL" }
+            }
+        }
+
+    ``data_formatada`` and ``hora_formatada`` are provided for
+    convenience so the front‑end can display localized date/time
+    without additional parsing.
+    """
+    # Build base meta information
     data = {
         "ultima_atualizacao": now.isoformat(),
-        "mercado_fechado": not is_market_open(),
-        "data_referencia": trade_date,
-        "arabica": price_arabica,
-        "conilon": price_conilon,
+        "data_formatada": now.strftime("%d/%m/%Y"),
+        "hora_formatada": now.strftime("%H:%M:%S"),
+        "pregao_aberto": is_market_open(),
+        "fonte": "Notícias Agrícolas",
+    }
+    # Build nested price objects for arabica and robusta/conilon
+    arabica_obj = {
+        "preco": price_arabica,
+        "unidade": "saca",
+        "peso_kg": 60,
+        "moeda": "BRL",
+    }
+    robusta_obj = {
+        "preco": price_conilon,
+        "unidade": "saca",
+        "peso_kg": 60,
+        "moeda": "BRL",
+    }
+    data["cafe"] = {
+        "arabica": arabica_obj,
+        # Use "robusta" as canonical key (data-loader.js validates this)
+        "robusta": robusta_obj,
+        # Provide "conilon" alias for backwards compatibility
+        "conilon": robusta_obj,
     }
     prices_path.write_text(json.dumps(data, ensure_ascii=False, indent=2))
 
@@ -61,42 +111,46 @@ def update_history(
     now: datetime,
 ) -> None:
     """
-    Append the latest coffee prices to the historical JSON file.
+    Append the latest coffee prices to the historical JSON file in a format
+    used by the site.
 
-    The history file records one entry per update containing both Arabica and
-    Conilon prices.  Each record stores:
-
-    * ``data``: the date the prices refer to (``trade_date``), formatted as
-      ``DD/MM/YYYY``.
-    * ``data_consulta``: the exact timestamp when the data was collected,
-      using ISO 8601 format.
-    * ``arabica``: the price of Arábica coffee on that date.
-    * ``conilon``: the price of Conilon (Robusta) coffee on that date.
-
-    Only the most recent 10 entries are kept to prevent unbounded growth.
+    The history file stores **two** records per update: one for arábica and
+    one for conilon/robusta.  Each record includes the date to which the
+    price refers (``referente_a``), the exact timestamp when the data was
+    collected (``coletado_em``), and identifies the product and type along
+    with its value.  Only the most recent 20 records (10 updates) are
+    retained.
     """
-    # Load existing history if present
     history: List[dict] = []
     if history_path.exists():
         try:
             history = json.loads(history_path.read_text())
         except json.JSONDecodeError:
-            # If the file is malformed, start with an empty list
             history = []
-
-    # Create a single entry for this update
-    entry = {
-        "data": trade_date,
-        "data_consulta": now.isoformat(),
-        "arabica": price_arabica,
-        "conilon": price_conilon,
+    # Build entry for arabica
+    entry_arabica = {
+        "referente_a": trade_date,
+        "coletado_em": now.isoformat(),
+        "produto": "cafe",
+        "tipo": "arabica",
+        "valor": price_arabica,
+        "unidade": "saca",
+        "moeda": "BRL",
     }
-
-    # Append the new entry and trim to the last 10 records
-    history.append(entry)
-    history = history[-10:]
-
-    # Write back to file
+    # Build entry for conilon/robusta (use "conillon" spelling expected by the site)
+    entry_conillon = {
+        "referente_a": trade_date,
+        "coletado_em": now.isoformat(),
+        "produto": "cafe",
+        "tipo": "conillon",
+        "valor": price_conilon,
+        "unidade": "saca",
+        "moeda": "BRL",
+    }
+    history.append(entry_arabica)
+    history.append(entry_conillon)
+    # Keep the last 20 entries (10 updates)
+    history = history[-20:]
     history_path.write_text(json.dumps(history, ensure_ascii=False, indent=2))
 
 
