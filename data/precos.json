@@ -97,5 +97,23 @@
     "valor": 1288.48,
     "unidade": "saca",
     "moeda": "BRL"
+  },
+  {
+    "referente_a": "19/09/2025",
+    "coletado_em": "2025-09-19T23:19:47.085705",
+    "produto": "cafe",
+    "tipo": "arabica",
+    "valor": 2147.29,
+    "unidade": "saca",
+    "moeda": "BRL"
+  },
+  {
+    "referente_a": "19/09/2025",
+    "coletado_em": "2025-09-19T23:19:47.085705",
+    "produto": "cafe",
+    "tipo": "conillon",
+    "valor": 1288.48,
+    "unidade": "saca",
+    "moeda": "BRL"
   }
 ]
