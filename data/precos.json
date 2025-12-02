@@ -1,24 +1,6 @@
 [
   {
     "referente_a": "30/11/2025",
-    "coletado_em": "2025-11-30T06:24:18.357723",
-    "produto": "cafe",
-    "tipo": "arabica",
-    "valor": 2252.95,
-    "unidade": "saca",
-    "moeda": "BRL"
-  },
-  {
-    "referente_a": "30/11/2025",
-    "coletado_em": "2025-11-30T06:24:18.357723",
-    "produto": "cafe",
-    "tipo": "conillon",
-    "valor": 1404.48,
-    "unidade": "saca",
-    "moeda": "BRL"
-  },
-  {
-    "referente_a": "30/11/2025",
     "coletado_em": "2025-11-30T10:30:25.631321",
     "produto": "cafe",
     "tipo": "arabica",
@@ -176,6 +158,24 @@
     "produto": "cafe",
     "tipo": "conillon",
     "valor": 1404.48,
+    "unidade": "saca",
+    "moeda": "BRL"
+  },
+  {
+    "referente_a": "01/12/2025",
+    "coletado_em": "2025-12-01T23:49:20.385596",
+    "produto": "cafe",
+    "tipo": "arabica",
+    "valor": 2233.34,
+    "unidade": "saca",
+    "moeda": "BRL"
+  },
+  {
+    "referente_a": "01/12/2025",
+    "coletado_em": "2025-12-01T23:49:20.385596",
+    "produto": "cafe",
+    "tipo": "conillon",
+    "valor": 1386.08,
     "unidade": "saca",
     "moeda": "BRL"
   }
