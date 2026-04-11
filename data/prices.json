@@ -1,24 +1,24 @@
 {
-  "ultima_atualizacao": "2026-04-10T14:52:00.838217",
-  "data_formatada": "10/04/2026",
-  "hora_formatada": "14:52:00",
-  "pregao_aberto": true,
+  "ultima_atualizacao": "2026-04-11T00:39:54.415068",
+  "data_formatada": "11/04/2026",
+  "hora_formatada": "00:39:54",
+  "pregao_aberto": false,
   "fonte": "Notícias Agrícolas",
   "cafe": {
     "arabica": {
-      "preco": 1821.38,
+      "preco": 1814.56,
       "unidade": "saca",
       "peso_kg": 60,
       "moeda": "BRL"
     },
     "robusta": {
-      "preco": 899.64,
+      "preco": 879.03,
       "unidade": "saca",
       "peso_kg": 60,
       "moeda": "BRL"
     },
     "conilon": {
-      "preco": 899.64,
+      "preco": 879.03,
       "unidade": "saca",
       "peso_kg": 60,
       "moeda": "BRL"
