@@ -1,24 +1,6 @@
 [
   {
     "referente_a": "19/04/2026",
-    "coletado_em": "2026-04-19T03:48:22.532212",
-    "produto": "cafe",
-    "tipo": "arabica",
-    "valor": 1765.66,
-    "unidade": "saca",
-    "moeda": "BRL"
-  },
-  {
-    "referente_a": "19/04/2026",
-    "coletado_em": "2026-04-19T03:48:22.532212",
-    "produto": "cafe",
-    "tipo": "conillon",
-    "valor": 885.48,
-    "unidade": "saca",
-    "moeda": "BRL"
-  },
-  {
-    "referente_a": "19/04/2026",
     "coletado_em": "2026-04-19T06:53:39.322575",
     "produto": "cafe",
     "tipo": "arabica",
@@ -173,6 +155,24 @@
   {
     "referente_a": "20/04/2026",
     "coletado_em": "2026-04-20T15:01:35.882088",
+    "produto": "cafe",
+    "tipo": "conillon",
+    "valor": 885.48,
+    "unidade": "saca",
+    "moeda": "BRL"
+  },
+  {
+    "referente_a": "20/04/2026",
+    "coletado_em": "2026-04-20T18:53:36.933427",
+    "produto": "cafe",
+    "tipo": "arabica",
+    "valor": 1765.66,
+    "unidade": "saca",
+    "moeda": "BRL"
+  },
+  {
+    "referente_a": "20/04/2026",
+    "coletado_em": "2026-04-20T18:53:36.933427",
     "produto": "cafe",
     "tipo": "conillon",
     "valor": 885.48,
